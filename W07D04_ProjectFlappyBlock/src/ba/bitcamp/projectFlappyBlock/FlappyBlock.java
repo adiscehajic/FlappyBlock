@@ -43,6 +43,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 
 	// Declaring variable that will import image.
 	private BufferedImage image;
+	private BufferedImage image1;
 
 	// Declaring variable that will count number of passed obstacles.
 	private int pointCounter = 0;
@@ -60,6 +61,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 		// Importing image.
 		try {
 			image = ImageIO.read(new File("images\\building.png"));
+			image1 = ImageIO.read(new File("images\\building1.jpg"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -160,8 +162,14 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// Drawing image.
-		g.drawImage(image, 0, 0, null);
-		// Declaring variables that will represent heigth of obstacles.
+		
+		if (pointCounter < 10) {
+			g.drawImage(image, 0, 0, null);
+		} else {
+			g.drawImage(image1, 0, 0, null);
+		}
+		
+		// Declaring variables that will represent height of obstacles.
 		int heigthOne = firstObstacle.obstacleHeigth;
 		int heigthTwo = secondObstacle.obstacleHeigth;
 		// Drawing block and obstacles.
@@ -170,7 +178,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 		secondObstacle.draw(g, heigthTwo);
 		thirdObstacle.draw(g, heigthOne);
 		fourthObstacle.draw(g, heigthTwo);
-		// Drawing number of passed obsacles.
+		// Drawing number of passed obstacles.
 		g.setColor(new Color(255, 64, 0));
 		g.setFont(new Font("Serif", Font.BOLD, 60));
 		g.drawString("" + pointCounter, 380, 100);
