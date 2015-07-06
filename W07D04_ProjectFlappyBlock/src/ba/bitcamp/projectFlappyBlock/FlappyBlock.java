@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -60,8 +59,10 @@ public class FlappyBlock extends JPanel implements ActionListener {
 
 		// Importing image.
 		try {
-			image = ImageIO.read(new File("images\\building.png"));
-			image1 = ImageIO.read(new File("images\\building1.jpg"));
+//			image = ImageIO.read(new File("images\\building.png"));
+			image = ImageIO.read(ResourceLoader.load("images\\building.png"));
+//			image1 = ImageIO.read(new File("images\\building1.jpg"));
+			image1 = ImageIO.read(ResourceLoader.load("images\\building1.jpg"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

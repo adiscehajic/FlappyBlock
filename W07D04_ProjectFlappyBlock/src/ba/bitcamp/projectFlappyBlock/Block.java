@@ -2,7 +2,6 @@ package ba.bitcamp.projectFlappyBlock;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.imageio.ImageIO;
 
@@ -42,7 +41,8 @@ public class Block {
 
 		// Importing image that will represent block.
 		try {
-			image = ImageIO.read(new File("images\\brick1.png"));
+		//	image = ImageIO.read(new File("images\\brick1.png"));
+			image = ImageIO.read(ResourceLoader.load("images\\brick1.png"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
