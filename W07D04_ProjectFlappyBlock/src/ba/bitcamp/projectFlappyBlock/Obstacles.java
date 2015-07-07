@@ -3,6 +3,11 @@ package ba.bitcamp.projectFlappyBlock;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author adis.cehajic
+ *
+ */
 public class Obstacles {
 
 	// Declaring variables.
@@ -21,8 +26,9 @@ public class Obstacles {
 	// Variable that represents if the obstacle is up or down.
 	private boolean isUp;
 
-	private static final int MOVE = 5;
-	private static final int RESET_POSITION = -150;
+	// Declaring constants.
+	public static final int MOVE = 5;
+	public static final int RESET_POSITION = -150;
 
 	/**
 	 * Constructor
@@ -109,12 +115,12 @@ public class Obstacles {
 	 * @return - True if the obstacle intersects and false if not.
 	 */
 	public boolean colideDown(Block block) {
-		if (block.y + block.HEIGHT > y) {
-			if (block.x < x && block.x + block.WIDTH + 3 > x) {
-				block.y = y - block.HEIGHT;
+		if (block.y + Block.HEIGHT > y) {
+			if (block.x < x && block.x + Block.WIDTH + 3 > x) {
+				block.y = y - Block.HEIGHT;
 				return true;
 			} else if (block.x > x && x + 150 > block.x) {
-				block.y = y - block.HEIGHT;
+				block.y = y - Block.HEIGHT;
 				return true;
 			}
 		}
@@ -129,8 +135,8 @@ public class Obstacles {
 	 * @return - True if the obstacle intersects and false if not.
 	 */
 	public boolean colideDownX(Block block) {
-		if (block.y + block.HEIGHT > y) {
-			if (block.x + block.WIDTH == x) {
+		if (block.y + Block.HEIGHT > y) {
+			if (block.x + Block.WIDTH == x) {
 				return true;
 			}
 		}
@@ -146,7 +152,7 @@ public class Obstacles {
 	 */
 	public boolean colideUp(Block block) {
 		if (gameHeight - obstacleSize - 150 > block.y) {
-			if (block.x < x && block.x + block.WIDTH + 3 > x) {
+			if (block.x < x && block.x + Block.WIDTH + 3 > x) {
 				return true;
 			} else if (block.x > x && x + 150 > block.x) {
 				return true;
@@ -164,7 +170,7 @@ public class Obstacles {
 	 */
 	public boolean colideUpX(Block block) {
 		if (gameHeight - obstacleSize - 150 > block.y) {
-			if (block.x + block.WIDTH == x) {
+			if (block.x + Block.WIDTH == x) {
 				return true;
 			}
 		}
@@ -177,8 +183,8 @@ public class Obstacles {
 	 * @return True if the block is on obstacle and false if not.
 	 */
 	public boolean crashOnObstacle(Block block) {
-		if (block.y > y - block.HEIGHT - 1) {
-			block.y = y - block.HEIGHT;
+		if (block.y > y - Block.HEIGHT - 1) {
+			block.y = y - Block.HEIGHT;
 			return true;
 		}
 		return false;

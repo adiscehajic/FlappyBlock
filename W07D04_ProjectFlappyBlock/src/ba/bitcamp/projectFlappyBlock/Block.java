@@ -3,6 +3,11 @@ package ba.bitcamp.projectFlappyBlock;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author adis.cehajic
+ *
+ */
 public class Block {
 
 	// Declaring variables.
@@ -15,8 +20,8 @@ public class Block {
 	public int ground;
 
 	// Declaring constants.
-	private static final int JUMP = 20;
-	private static final int DOWN = 2;
+	public static final int JUMP = 20;
+	public static final int DOWN = 2;
 	public static final int WIDTH = 40;
 	public static final int HEIGHT = 25;
 

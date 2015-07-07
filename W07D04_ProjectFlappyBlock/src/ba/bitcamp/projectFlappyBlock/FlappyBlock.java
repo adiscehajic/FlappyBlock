@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author adis.cehajic
+ *
+ */
 public class FlappyBlock extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = -4055775700740040546L;
@@ -53,9 +58,9 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	private static int highScore;
 
 	// Importing sounds from a file.
-	File point = new File("res/sounds/point.wav");
-	File hit = new File("res/sounds/hit.wav");
-	File swooshing = new File("res/sounds/swooshing.wav");
+	private File point = new File("res/sounds/point.wav");
+	private File hit = new File("res/sounds/hit.wav");
+	private File swooshing = new File("res/sounds/swooshing.wav");
 
 	/**
 	 * Constructor

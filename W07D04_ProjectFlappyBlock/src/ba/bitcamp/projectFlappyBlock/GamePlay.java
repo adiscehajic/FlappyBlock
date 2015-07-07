@@ -2,6 +2,11 @@ package ba.bitcamp.projectFlappyBlock;
 
 import javax.swing.JFrame;
 
+/**
+ * 
+ * @author adis.cehajic
+ *
+ */
 public class GamePlay extends JFrame {
 
 	private static final long serialVersionUID = 1356236529790095779L;
