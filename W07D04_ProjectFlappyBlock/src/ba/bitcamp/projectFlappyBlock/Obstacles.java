@@ -146,7 +146,6 @@ public class Obstacles {
 	 */
 	public boolean colideUp(Block block) {
 		if (gameHeight - obstacleSize - 150 > block.y) {
-
 			if (block.x < x && block.x + block.WIDTH + 3 > x) {
 				return true;
 			} else if (block.x > x && x + 150 > block.x) {

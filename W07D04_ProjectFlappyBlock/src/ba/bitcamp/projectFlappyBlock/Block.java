@@ -2,9 +2,6 @@ package ba.bitcamp.projectFlappyBlock;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
 
 public class Block {
 
@@ -23,9 +20,6 @@ public class Block {
 	public static final int WIDTH = 40;
 	public static final int HEIGHT = 25;
 
-	// Declaring image variable.
-	private BufferedImage image;
-
 	/**
 	 * Constructor
 	 * 
@@ -39,13 +33,6 @@ public class Block {
 		this.x = width;
 		this.y = height;
 		this.ground = height * 2 + 147;
-
-		// Importing image that will represent block.
-		try {
-			image = ImageIO.read(ResourceLoader.load("images/brick1.png"));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**
@@ -54,11 +41,8 @@ public class Block {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		//g.drawImage(image, x, (int) y, WIDTH, HEIGHT, null, null);
 		g.setColor(new Color(23, 105, 133));
 		g.fill3DRect(x, (int) y, WIDTH, HEIGHT, true);
-		g.setColor(Color.BLACK);
-		g.draw3DRect(x, (int) y, WIDTH, HEIGHT, true);
 	}
 
 	/**
@@ -88,8 +72,8 @@ public class Block {
 	 *         if it is not.
 	 */
 	public boolean crashOnGround() {
-		if (y > ground) {
-			y = ground;
+		if (y > ground - 5) {
+			y = ground + 5;
 			return true;
 		} else {
 			return false;

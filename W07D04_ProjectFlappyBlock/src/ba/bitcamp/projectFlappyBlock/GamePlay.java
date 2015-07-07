@@ -8,14 +8,14 @@ public class GamePlay extends JFrame {
 
 	// Declaring main JFrame.
 	public static JFrame window = new JFrame("Flappy block");
-
+	
 	/**
 	 * Constructor
 	 */
 	public GamePlay() {
 
 		FlappyBlock flappyBlock = new FlappyBlock(800, 600);
-
+		
 		// Setting JFrame appearance.
 		window.setSize(800, 600);
 		window.setLocationRelativeTo(null);

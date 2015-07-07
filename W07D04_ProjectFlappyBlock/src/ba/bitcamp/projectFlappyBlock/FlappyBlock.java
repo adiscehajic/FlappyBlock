@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -54,6 +52,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	private int pointCounter = 0;
 	private static int highScore;
 
+	// Importing sounds from a file.
 	File point = new File("res/sounds/point.wav");
 	File hit = new File("res/sounds/hit.wav");
 	File swooshing = new File("res/sounds/swooshing.wav");
@@ -68,7 +67,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	 */
 	public FlappyBlock(int width, int height) {
 
-		// Importing image.
+		// Importing images.
 		try {
 			image = ImageIO.read(ResourceLoader.load("images/city3.png"));
 			start = ImageIO.read(ResourceLoader.load("images/start.png"));
@@ -136,17 +135,6 @@ public class FlappyBlock extends JPanel implements ActionListener {
 
 			}
 		});
-
-		// Adding focus listener
-		addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				timer.stop();
-			}
-
-			public void focusGained(FocusEvent e) {
-			}
-		});
-
 	}
 
 	/**
