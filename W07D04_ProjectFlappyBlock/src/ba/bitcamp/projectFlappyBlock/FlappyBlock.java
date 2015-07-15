@@ -2,6 +2,7 @@ package ba.bitcamp.projectFlappyBlock;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -11,10 +12,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -52,16 +62,20 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	// Declaring variable that will import image.
 	private BufferedImage image;
 	private BufferedImage start;
+	
+	private BufferedReader reader;
+	
+	private ImageIcon icon = new ImageIcon(FlappyBlock.class.getResource("/images/icon.jpg"));
 
 	// Declaring variable that will count number of passed obstacles.
 	private int pointCounter = 0;
-	private static int highScore;
 
-	// Importing sounds from a file.
-	private File point = new File("res/sounds/point.wav");
-	private File hit = new File("res/sounds/hit.wav");
-	private File swooshing = new File("res/sounds/swooshing.wav");
-
+	// Importing sounds.
+	private String point = "/sounds/point.wav";
+	private String hit = "/sounds/hit.wav";
+	private String swooshing = "/sounds/swooshing.wav";
+	
+	
 	/**
 	 * Constructor
 	 * 
@@ -74,7 +88,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 
 		// Importing images.
 		try {
-			image = ImageIO.read(ResourceLoader.load("images/city3.png"));
+			image = ImageIO.read(FlappyBlock.class.getResourceAsStream("/images/city.jpg"));
 			start = ImageIO.read(ResourceLoader.load("images/start.png"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -122,7 +136,8 @@ public class FlappyBlock extends JPanel implements ActionListener {
 					playSound(swooshing);
 					// If the block has intersect with obstacle disabling the
 					// key SPACE.
-					if (isBlockActive == true) {
+					timer.start();
+					if (isBlockActive == true) {		
 						mainBlock.jump();
 					}
 				}
@@ -137,7 +152,6 @@ public class FlappyBlock extends JPanel implements ActionListener {
 				timer.start();
 				isStarted = true;
 				((Component) e.getSource()).requestFocus();
-
 			}
 		});
 	}
@@ -146,15 +160,16 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	 * Restarts game.
 	 */
 	public void restartWindow() {
+		
 		// Opening option dialog that asks user if he wants to play again.
 		int choice = JOptionPane
 				.showOptionDialog(
 						null,
 						String.format(
-								"Your score is: %d\nHighscore is: %d\nDo you want to play again? ",
-								pointCounter, highScore), "",
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
+								"Your score is: %d\nDo you want to play again? ",
+								pointCounter), "",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE, icon, new String[]{"Yes", "No", "See on GitHub"}, null);
 
 		// If option YES is chosen closing old window and restarting game.
 		if (choice == JOptionPane.YES_OPTION) {
@@ -163,6 +178,17 @@ public class FlappyBlock extends JPanel implements ActionListener {
 			// If option NO is chosen exiting game.
 		} else if (choice == JOptionPane.NO_OPTION) {
 			System.exit(0);
+		} else if (choice == JOptionPane.CANCEL_OPTION) {
+			try {
+				Desktop.getDesktop().browse(new URI("https://github.com/adiscehajic/FlappyBlock/tree/master/W07D04_ProjectFlappyBlock"));
+				System.exit(0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -172,12 +198,14 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// Drawing image.
-
 		g.drawImage(image, 0, 0, null);
 
 		// Checking if the game is started and drawing images.
 		if (!isStarted) {
 			g.drawImage(start, 300, 65, null);
+			g.setColor(new Color(23, 105, 133));
+			g.setFont(new Font("Serif", Font.BOLD, 30));
+			g.drawString("Press SPACE to jump!", 50, 525);
 		} else {
 			// Declaring variables that will represent height of obstacles.
 			int heigthOne = firstObstacle.obstacleHeigth;
@@ -206,17 +234,7 @@ public class FlappyBlock extends JPanel implements ActionListener {
 			pointCounter++;
 			playSound(point);
 		}
-		// Reading highscore from file and checking if the new score is higher
-		// than highscore.
-		TextIO.readFile("src/ba/bitcamp/projectFlappyBlock/text.txt");
-		highScore = TextIO.getInt();
-		TextIO.readStandardInput();
-		if (highScore < pointCounter) {
-			highScore = pointCounter;
-			TextIO.writeFile("src/ba/bitcamp/projectFlappyBlock/text.txt");
-			TextIO.putln(highScore);
-			TextIO.writeStandardOutput();
-		}
+		
 		// Checking if the block value of y is lower than zero and stopping game
 		// if it is true.
 		if (mainBlock.y < 0) {
@@ -311,10 +329,11 @@ public class FlappyBlock extends JPanel implements ActionListener {
 	 * @param sound
 	 *            - Sound that needs to be played.
 	 */
-	public static void playSound(File sound) {
+	public static void playSound(String sound) {
 		try {
+			URL url = FlappyBlock.class.getResource(sound);
 			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(sound));
+			clip.open(AudioSystem.getAudioInputStream(url));
 			clip.start();
 
 			Thread.sleep(clip.getMicrosecondLength() / 100000);
